@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using DataCollection.JobPostings;
 
 namespace Runner
 {
@@ -23,9 +25,12 @@ namespace Runner
             var publisherUrl = jobsXml.Root.Descendants("publisherurl").FirstOrDefault();
             var job = jobsXml.Root.Descendants("job").ToList();
 
+            var serializer = new XmlSerializer(typeof(XmlFeedJobPosting));
+
+
             var result = new Jobs(publisher?.Value,
                 publisherUrl?.Value,
-                job?.Select(x => x.Value).ToList() ?? new List<string>());
+                job?.Select(x => (XmlFeedJobPosting)serializer.Deserialize(x.CreateReader())).ToList() ?? new List<XmlFeedJobPosting>());
 
 
             var collector = new WebSiteCollector();
@@ -43,11 +48,11 @@ namespace Runner
     {
         public readonly string Publisher;
         public readonly string PublisherUrl;
-        public readonly List<string> JobListings;
+        public readonly List<XmlFeedJobPosting> JobListings;
 
         public Jobs(string publisher,
             string publisherUrl,
-            List<string> jobListings)
+            List<XmlFeedJobPosting> jobListings)
         {
             Publisher = publisher;
             PublisherUrl = publisherUrl;
