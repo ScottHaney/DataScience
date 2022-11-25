@@ -8,7 +8,7 @@ namespace DataScience.JobSites
 {
     public class WalmartInfo : JobSiteInfo
     {
-        private readonly string _url = "careers.walmart.com";
+        private readonly string _url = "https://careers.walmart.com";
 
         public override string CreateHttpString(JobSearchParameters parameters)
         {
