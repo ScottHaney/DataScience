@@ -9,6 +9,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using DataCollection.JobPostings;
+using System.Text.RegularExpressions;
 
 namespace Runner
 {
@@ -31,6 +32,17 @@ namespace Runner
             var result = new Jobs(publisher?.Value,
                 publisherUrl?.Value,
                 job?.Select(x => (XmlFeedJobPosting)serializer.Deserialize(x.CreateReader())).ToList() ?? new List<XmlFeedJobPosting>());
+
+
+            var regex1 = new Regex(@"<[\d\w_\-\.]+>");
+            var regex2 = new Regex(@"</[\d\w_\-\.]+>");
+            var regex3 = new Regex(@"<[\d\w_\-\.]+/>");
+
+            var original = result.JobListings.First().Description;
+            var filtered = regex1.Replace(original, "");
+            filtered = regex2.Replace(filtered, "");
+            filtered = regex3.Replace(filtered, "");
+
 
 
             var collector = new WebSiteCollector();
