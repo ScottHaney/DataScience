@@ -13,7 +13,7 @@ namespace DataCollection.DataFilters
 
         public string RemoveTags(string text)
         {
-            var filtered = text.Replace(text, "");
+            var filtered = regex1.Replace(text, "");
             filtered = regex2.Replace(filtered, "");
             filtered = regex3.Replace(filtered, "");
 
