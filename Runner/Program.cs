@@ -19,11 +19,9 @@ namespace Runner
         static async Task Main(string[] args)
         {
             var jobFeed = new JobXmlFeed("https://www.workable.com/boards/workable.xml");
-            var jobs = await jobFeed.GetXmlAsync();
-
-            var jobsXml = XDocument.Parse(jobs);
-
-            var publisher = jobsXml.Root.Descendants("publisher").FirstOrDefault();
+            var jobs = ParseJobs(await jobFeed.GetXmlAsync());
+            
+            /*var publisher = jobsXml.Root.Descendants("publisher").FirstOrDefault();
             var publisherUrl = jobsXml.Root.Descendants("publisherurl").FirstOrDefault();
             var job = jobsXml.Root.Descendants("job").ToList();
 
@@ -42,9 +40,17 @@ namespace Runner
             var parameters = new JobSearchParameters()
             {
                 SearchQuery = "Data Science"
-            };
+            };*/
 
             //var result = await collector.Collect(new WalmartInfo(), parameters);
+        }
+
+        private static XmlFeedJobPostings ParseJobs(string jobsXml)
+        {
+            var jobsSerializer = new XmlSerializer(typeof(XmlFeedJobPostings));
+
+            using (var reader = XDocument.Parse(jobsXml).CreateReader())
+                return (XmlFeedJobPostings)jobsSerializer.Deserialize(reader);
         }
     }
 
