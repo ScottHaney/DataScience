@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using DataCollection.DataFilters;
 using DataCollection.JobPostings.XmlFeed;
 using DataAnalysis.SpecificCases.JobsData.Searches;
+using DataCollection.ProgrammingLanguagesInfo;
 
 namespace Runner
 {
@@ -19,6 +20,9 @@ namespace Runner
     {
         static async Task Main(string[] args)
         {
+            var test = new WikipediaProgrammingLanguageNamesExtractor();
+            var names = await test.GetLanguageNamesAsync();
+
             XmlFeedJobPostings jobs;
             if (args.Any())
             {

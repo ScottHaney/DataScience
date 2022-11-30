@@ -28,7 +28,7 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
                 .Select(x => new { Description = x, Counts = wordCounter.Count(x) })
                 .ToList();
 
-            var cSharpMatches = individualResults.Where(x => x.Counts.ContainsKey("C#"))
+            var cSharpMatches = individualResults.Where(x => x.Counts.ContainsKey("hadoop"))
                 .Select(x => x.Description)
                 .ToList();
 
