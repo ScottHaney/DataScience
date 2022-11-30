@@ -20,7 +20,7 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
                 .Select(x => xmlTagsRemover.RemoveTags(x))
                 .ToArray();
 
-            var wordCounter = new WordCounter(null, new IsPresentWordCountMethod(), false);
+            var wordCounter = new WordCounter(null, new IsPresentWordCountMethod(), true);
             var results = wordCounter.Count(descriptions);
 
             var sortedResults = results.OrderByDescending(x => x.Value).ToList();
