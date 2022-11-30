@@ -1,7 +1,6 @@
 ﻿using DataScience;
 using DataScience.JobSearch;
 using DataScience.JobSites;
-using DataScience.JobXmlFeeds;
 using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -11,6 +10,7 @@ using System.Xml.Serialization;
 using DataCollection.JobPostings;
 using System.Text.RegularExpressions;
 using DataCollection.DataFilters;
+using DataCollection.JobPostings.XmlFeed;
 
 namespace Runner
 {

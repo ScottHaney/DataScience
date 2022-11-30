@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataScience.JobXmlFeeds
+namespace DataCollection.JobPostings.XmlFeed
 {
     public class JobXmlFeed
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace DataCollection.JobPostings
+namespace DataCollection.JobPostings.XmlFeed
 {
     /// <summary>
     /// Follows the format from https://developer.indeed.com/docs/indeed-apply/enterprise-ats/
