@@ -3,6 +3,7 @@ using DataCollection.JobPostings.XmlFeed;
 using System;
 using System.Linq;
 using WordCounting;
+using WordCounting.Counting;
 
 namespace DataAnalysis.SpecificCases.JobsData.Searches
 {
@@ -16,11 +17,11 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
 
             var descriptions = dataScienceJobs
                 .Select(x => x.Description)
-                .Select(x => xmlTagsRemover.RemoveTags(x));
+                .Select(x => xmlTagsRemover.RemoveTags(x))
+                .ToArray();
 
-            var wordCounter = new WordCounter();
-            var giantDescription = string.Join(" ", descriptions);
-            var results = wordCounter.Count(giantDescription);
+            var wordCounter = new WordCounter(null, new IsPresentWordCountMethod(), false);
+            var results = wordCounter.Count(descriptions);
 
             var sortedResults = results.OrderByDescending(x => x.Value).ToList();
         }
