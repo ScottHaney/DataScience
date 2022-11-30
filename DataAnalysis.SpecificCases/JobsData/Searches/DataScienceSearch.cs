@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using WordCounting;
 using WordCounting.Counting;
+using WordCounting.CharacterIdentification;
 
 namespace DataAnalysis.SpecificCases.JobsData.Searches
 {
@@ -20,10 +21,23 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
                 .Select(x => xmlTagsRemover.RemoveTags(x))
                 .ToArray();
 
-            var wordCounter = new WordCounter(null, new IsPresentWordCountMethod(), true);
+            var wordCounter = new WordCounter(new CustomCharacterIdentifier(), new IsPresentWordCountMethod(), true);
             var results = wordCounter.Count(descriptions);
 
             var sortedResults = results.OrderByDescending(x => x.Value).ToList();
+        }
+    }
+
+    public class CustomCharacterIdentifier : ICharacterIdentifier
+    {
+        public bool IsWordCharacterThatCanStartAWord(char c)
+        {
+            return char.IsLetter(c);
+        }
+
+        public bool IsWordCharacterThatCantStartAWord(char c)
+        {
+            return !char.IsWhiteSpace(c);
         }
     }
 }
