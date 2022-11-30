@@ -21,28 +21,18 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
                 .Select(x => xmlTagsRemover.RemoveTags(x))
                 .ToArray();
 
-            var wordCounter = new WordCounter(new CustomCharacterIdentifier(), new IsPresentWordCountMethod(), true);
-            var results = wordCounter.Count(descriptions);
+            var wordCounter = new WordCounter(wordCountMethod: new IsPresentWordCountMethod(), mergeCounts: true);
+            var overallResults = wordCounter.Count(descriptions);
 
-            var sortedResults = results.OrderByDescending(x => x.Value).ToList();
+            var individualResults = descriptions
+                .Select(x => new { Description = x, Counts = wordCounter.Count(x) })
+                .ToList();
+
+            var cSharpMatches = individualResults.Where(x => x.Counts.ContainsKey("C#"))
+                .Select(x => x.Description)
+                .ToList();
+
+            var sortedResults = overallResults.OrderByDescending(x => x.Value).ToList();
         }
-    }
-
-    public class CustomCharacterIdentifier : ICharacterIdentifier
-    {
-        public bool IsWordCharacterThatCanStartAWord(char c)
-        {
-            return char.IsLetter(c);
-        }
-
-        public bool IsWordCharacterThatCantStartAWord(char c)
-        {
-            return !char.IsWhiteSpace(c) && !_sentenceStructurePunctuationMarks.Contains(c);
-        }
-
-        private static readonly char[] _sentenceStructurePunctuationMarks = new char[]
-        {
-            '.', '?', '!', ',', ';', ':', '"'
-        };
     }
 }
