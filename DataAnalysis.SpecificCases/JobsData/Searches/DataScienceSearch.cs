@@ -37,7 +37,12 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
 
         public bool IsWordCharacterThatCantStartAWord(char c)
         {
-            return !char.IsWhiteSpace(c);
+            return !char.IsWhiteSpace(c) && !_sentenceStructurePunctuationMarks.Contains(c);
         }
+
+        private static readonly char[] _sentenceStructurePunctuationMarks = new char[]
+        {
+            '.', '?', '!', ',', ';', ':', '"'
+        };
     }
 }
