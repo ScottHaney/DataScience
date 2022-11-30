@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "Runner\Runner.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollection.Tests", "DataCollection.Tests\DataCollection.Tests.csproj", "{8D424E99-91C1-499F-B300-C69F91D30BB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalysis.SpecificCases", "DataAnalysis.SpecificCases\DataAnalysis.SpecificCases.csproj", "{6FCA8B2F-01AB-4243-B3F9-15933BDC3F17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8D424E99-91C1-499F-B300-C69F91D30BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D424E99-91C1-499F-B300-C69F91D30BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D424E99-91C1-499F-B300-C69F91D30BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FCA8B2F-01AB-4243-B3F9-15933BDC3F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FCA8B2F-01AB-4243-B3F9-15933BDC3F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FCA8B2F-01AB-4243-B3F9-15933BDC3F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FCA8B2F-01AB-4243-B3F9-15933BDC3F17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,6 +11,7 @@ using DataCollection.JobPostings;
 using System.Text.RegularExpressions;
 using DataCollection.DataFilters;
 using DataCollection.JobPostings.XmlFeed;
+using DataAnalysis.SpecificCases.JobsData.Searches;
 
 namespace Runner
 {
@@ -29,21 +30,7 @@ namespace Runner
                 jobs = ParseJobs(await jobFeed.GetXmlAsync());
             }
 
-            var dataScienceJobs = jobs.Jobs.Where(x => x.Title.Contains("Data Sci", StringComparison.OrdinalIgnoreCase)).ToList();
-
-            var xmlTagsRemover = new XmlTagsRemover();
-
-            var descriptions = dataScienceJobs
-                .Select(x => x.Description)
-                .Select(x => xmlTagsRemover.RemoveTags(x));
-
-            var wordCounter = new WordCounter.WordCounter();
-            var giantDescription = string.Join(" ", descriptions);
-            var results = wordCounter.Count(giantDescription);
-
-            var sortedResults = results.OrderByDescending(x => x.Value).ToList();
-            
-
+            new DataScienceSearch().Run(jobs);
         }
 
         private static XmlFeedJobPostings ParseJobs(string jobsXml)
@@ -52,22 +39,6 @@ namespace Runner
 
             using (var reader = XDocument.Parse(jobsXml).CreateReader())
                 return (XmlFeedJobPostings)jobsSerializer.Deserialize(reader);
-        }
-    }
-
-    public class Jobs
-    {
-        public readonly string Publisher;
-        public readonly string PublisherUrl;
-        public readonly List<XmlFeedJobPosting> JobListings;
-
-        public Jobs(string publisher,
-            string publisherUrl,
-            List<XmlFeedJobPosting> jobListings)
-        {
-            Publisher = publisher;
-            PublisherUrl = publisherUrl;
-            JobListings = jobListings;
         }
     }
 }
