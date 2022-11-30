@@ -18,8 +18,11 @@ namespace Runner
     {
         static async Task Main(string[] args)
         {
-            var jobFeed = new JobXmlFeed("https://www.workable.com/boards/workable.xml");
-            var jobs = ParseJobs(await jobFeed.GetXmlAsync());
+            //var jobFeed = new JobXmlFeed("https://www.workable.com/boards/workable.xml");
+            //var jobsXml = await jobFeed.GetXmlAsync();
+
+            var jobsXml = System.IO.File.ReadAllText(args[0]);
+            var jobs = ParseJobs(jobsXml);
             
             /*var publisher = jobsXml.Root.Descendants("publisher").FirstOrDefault();
             var publisherUrl = jobsXml.Root.Descendants("publisherurl").FirstOrDefault();
