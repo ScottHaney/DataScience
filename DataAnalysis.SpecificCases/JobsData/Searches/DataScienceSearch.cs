@@ -2,6 +2,7 @@
 using DataCollection.JobPostings.XmlFeed;
 using System;
 using System.Linq;
+using WordCounting;
 
 namespace DataAnalysis.SpecificCases.JobsData.Searches
 {
@@ -17,7 +18,7 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
                 .Select(x => x.Description)
                 .Select(x => xmlTagsRemover.RemoveTags(x));
 
-            var wordCounter = new WordCounter.WordCounter();
+            var wordCounter = new WordCounter();
             var giantDescription = string.Join(" ", descriptions);
             var results = wordCounter.Count(giantDescription);
 

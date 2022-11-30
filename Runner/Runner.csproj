@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="English.WordCounter" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DataAnalysis.SpecificCases\DataAnalysis.SpecificCases.csproj" />
     <ProjectReference Include="..\DataCollection\DataCollection.csproj" />
     <ProjectReference Include="..\DataScience\DataScience.csproj" />
