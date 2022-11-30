@@ -30,6 +30,18 @@ namespace Runner
             }
 
             var dataScienceJobs = jobs.Jobs.Where(x => x.Title.Contains("Data Sci", StringComparison.OrdinalIgnoreCase)).ToList();
+
+            var xmlTagsRemover = new XmlTagsRemover();
+
+            var descriptions = dataScienceJobs
+                .Select(x => x.Description)
+                .Select(x => xmlTagsRemover.RemoveTags(x));
+
+            var wordCounter = new WordCounter.WordCounter();
+            var giantDescription = string.Join(" ", descriptions);
+            var results = wordCounter.Count(giantDescription);
+
+            var sortedResults = results.OrderByDescending(x => x.Value).ToList();
             
 
         }
