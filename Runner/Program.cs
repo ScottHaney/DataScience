@@ -18,34 +18,20 @@ namespace Runner
     {
         static async Task Main(string[] args)
         {
-            //var jobFeed = new JobXmlFeed("https://www.workable.com/boards/workable.xml");
-            //var jobsXml = await jobFeed.GetXmlAsync();
-
-            var jobsXml = System.IO.File.ReadAllText(args[0]);
-            var jobs = ParseJobs(jobsXml);
-            
-            /*var publisher = jobsXml.Root.Descendants("publisher").FirstOrDefault();
-            var publisherUrl = jobsXml.Root.Descendants("publisherurl").FirstOrDefault();
-            var job = jobsXml.Root.Descendants("job").ToList();
-
-            var serializer = new XmlSerializer(typeof(XmlFeedJobPosting));
-
-
-            var result = new Jobs(publisher?.Value,
-                publisherUrl?.Value,
-                job?.Select(x => (XmlFeedJobPosting)serializer.Deserialize(x.CreateReader())).ToList() ?? new List<XmlFeedJobPosting>());
-
-            var xmlTagsRemover = new XmlTagsRemover();
-            var filtered = xmlTagsRemover.RemoveTags(result.JobListings.First().Description);
-
-            var collector = new WebSiteCollector();
-
-            var parameters = new JobSearchParameters()
+            XmlFeedJobPostings jobs;
+            if (args.Any())
             {
-                SearchQuery = "Data Science"
-            };*/
+                jobs = ParseJobs(System.IO.File.ReadAllText(args[0]));
+            }
+            else
+            {
+                var jobFeed = new JobXmlFeed("https://www.workable.com/boards/workable.xml");
+                jobs = ParseJobs(await jobFeed.GetXmlAsync());
+            }
 
-            //var result = await collector.Collect(new WalmartInfo(), parameters);
+            var dataScienceJobs = jobs.Jobs.Where(x => x.Title.Contains("Data Sci", StringComparison.OrdinalIgnoreCase)).ToList();
+            
+
         }
 
         private static XmlFeedJobPostings ParseJobs(string jobsXml)
