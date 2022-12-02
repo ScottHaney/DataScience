@@ -20,9 +20,6 @@ namespace Runner
     {
         static async Task Main(string[] args)
         {
-            var test = new WikipediaProgrammingLanguageNamesExtractor();
-            var names = await test.GetLanguageNamesAsync();
-
             XmlFeedJobPostings jobs;
             if (args.Any())
             {
@@ -34,7 +31,7 @@ namespace Runner
                 jobs = ParseJobs(await jobFeed.GetXmlAsync());
             }
 
-            new DataScienceSearch().Run(jobs);
+            await new DataScienceSearch().Run(jobs);
         }
 
         private static XmlFeedJobPostings ParseJobs(string jobsXml)

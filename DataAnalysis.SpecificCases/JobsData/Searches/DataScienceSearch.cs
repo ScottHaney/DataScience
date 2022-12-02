@@ -5,12 +5,14 @@ using System.Linq;
 using WordCounting;
 using WordCounting.Counting;
 using WordCounting.CharacterIdentification;
+using DataCollection.ProgrammingLanguagesInfo;
+using System.Threading.Tasks;
 
 namespace DataAnalysis.SpecificCases.JobsData.Searches
 {
     public class DataScienceSearch
     {
-        public void Run(XmlFeedJobPostings jobs)
+        public async Task Run(XmlFeedJobPostings jobs)
         {
             var dataScienceJobs = jobs.Jobs.Where(x => x.Title.Contains("Data Sci", StringComparison.OrdinalIgnoreCase)).ToList();
 
@@ -28,8 +30,11 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
                 .Select(x => new { Description = x, Counts = wordCounter.Count(x) })
                 .ToList();
 
-            var cSharpMatches = individualResults.Where(x => x.Counts.ContainsKey("hadoop"))
-                .Select(x => x.Description)
+            var programmingLanguageNames = await new WikipediaProgrammingLanguageNamesExtractor().GetLanguageNamesAsync();
+
+            var programmingLanguageFrequencies = programmingLanguageNames
+                .ToDictionary(x => x, x => overallResults.ContainsKey(x) ? overallResults[x] : 0)
+                .OrderByDescending(x => x.Value)
                 .ToList();
 
             var sortedResults = overallResults.OrderByDescending(x => x.Value).ToList();
