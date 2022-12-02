@@ -7,6 +7,7 @@ using WordCounting.Counting;
 using WordCounting.CharacterIdentification;
 using DataCollection.ProgrammingLanguagesInfo;
 using System.Threading.Tasks;
+using DataCollection.KnownTerminology;
 
 namespace DataAnalysis.SpecificCases.JobsData.Searches
 {
@@ -33,6 +34,17 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
             var programmingLanguageNames = await new WikipediaProgrammingLanguageNamesExtractor().GetLanguageNamesAsync();
 
             var programmingLanguageFrequencies = programmingLanguageNames
+                .ToDictionary(x => x, x => overallResults.ContainsKey(x) ? overallResults[x] : 0)
+                .OrderByDescending(x => x.Value)
+                .ToList();
+
+            var machineLearningTerms = await new MachineLearningGlossary().GetTermsAsync();
+
+            var singleWordMachineLearningTerms = machineLearningTerms
+                .Where(x => x.All(x => !char.IsWhiteSpace(x)))
+                .ToList();
+
+            var machineLearningTermsFrequencies = singleWordMachineLearningTerms
                 .ToDictionary(x => x, x => overallResults.ContainsKey(x) ? overallResults[x] : 0)
                 .OrderByDescending(x => x.Value)
                 .ToList();
