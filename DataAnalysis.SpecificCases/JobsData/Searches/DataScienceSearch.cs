@@ -8,6 +8,8 @@ using WordCounting.CharacterIdentification;
 using DataCollection.ProgrammingLanguagesInfo;
 using System.Threading.Tasks;
 using DataCollection.KnownTerminology;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace DataAnalysis.SpecificCases.JobsData.Searches
 {
@@ -50,6 +52,11 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
                 .ToList();
 
             var sortedResults = overallResults.OrderByDescending(x => x.Value).ToList();
+
+            var jobMatches = individualResults
+                .Where(x => x.Counts.ContainsKey("k-means"))
+                .Select(x => x.Description)
+                .ToList();
         }
     }
 }
