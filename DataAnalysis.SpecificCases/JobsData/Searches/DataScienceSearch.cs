@@ -42,8 +42,11 @@ namespace DataAnalysis.SpecificCases.JobsData.Searches
 
             var machineLearningTerms = await new MachineLearningGlossary().GetTermsAsync();
 
+            var extractor = new ParenthesizedTextExtractor();
             var singleWordMachineLearningTerms = machineLearningTerms
+                .SelectMany(x => extractor.GetTermPieces(x))
                 .Where(x => x.All(x => !char.IsWhiteSpace(x)))
+                .Distinct()
                 .ToList();
 
             var machineLearningTermsFrequencies = singleWordMachineLearningTerms
