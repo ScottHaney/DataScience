@@ -21,7 +21,7 @@ namespace Runner
         static async Task Main(string[] args)
         {
             XmlFeedJobPostings jobs;
-            if (args.Any())
+            if (args.Any() && System.IO.File.Exists(args[0]))
             {
                 jobs = ParseJobs(System.IO.File.ReadAllText(args[0]));
             }
